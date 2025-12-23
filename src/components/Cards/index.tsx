@@ -7,7 +7,7 @@ import {
   Description,
   TagRow
 } from './styles'
-import imagem1 from '../../assets/images/imagem1.png'
+// Link removed: Tag will receive the `to` prop directly
 
 export type CardDataProps = {
   title: string
@@ -49,7 +49,7 @@ const Card = ({
       <Description>{description}</Description>
     </CardSubContainer>
     <CardSubContainer kind="text">
-      <Tag type="link" to="/teste">
+      <Tag type="link" to="/profile">
         Saiba mais
       </Tag>
     </CardSubContainer>

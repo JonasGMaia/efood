@@ -1,31 +1,52 @@
 import Tag from '../Tag'
-import imagem1 from '../../assets/images/imagem1.png'
 import Ratting from '../Ratting'
-import { CardsContainer, CardSubContainer } from './styles'
+import {
+  CardsContainer,
+  CardSubContainer,
+  Name,
+  Description,
+  TagRow
+} from './styles'
+import imagem1 from '../../assets/images/imagem1.png'
+
+export type CardDataProps = {
+  title: string
+  categories: string[]
+  description: string
+  image: string
+  ratting: string
+}
 
 export type SubCardProps = {
   kind?: 'image' | 'text'
 }
 
-const Card = () => (
+const Card = ({
+  title,
+  categories,
+  description,
+  image,
+  ratting
+}: CardDataProps) => (
   <CardsContainer>
     <CardSubContainer
       kind="image"
-      style={{ backgroundImage: `url(${imagem1})`, minHeight: '217px' }}
+      style={{ backgroundImage: `url(${image})`, minHeight: '217px' }}
     >
-      <Tag type="descriptor" />
+      <TagRow>
+        {categories.map((category) => (
+          <Tag key={category} type="category">
+            {category}
+          </Tag>
+        ))}
+      </TagRow>
     </CardSubContainer>
     <CardSubContainer kind="text">
-      <h2> Nome Restautante</h2>
-      <Ratting />
+      <Name>{title}</Name>
+      <Ratting>{ratting}</Ratting>
     </CardSubContainer>
     <CardSubContainer kind="text">
-      <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Quasi, eius
-        ipsum libero nisi dolore quam maiores laboriosam magni architecto
-        voluptates tempora, perspiciatis impedit officiis. Pariatur aut odio
-        enim ducimus laboriosam?
-      </p>
+      <Description>{description}</Description>
     </CardSubContainer>
     <CardSubContainer kind="text">
       <Tag type="link" to="/teste">

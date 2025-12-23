@@ -1,18 +1,13 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 
-import Hero from './components/Hero'
 import { GlobalCss } from './styles'
-import HomeGrid from './components/HomeGrids'
+
+import Home from './pages/Home'
 
 const routes = createBrowserRouter([
   {
     path: '/',
-    element: (
-      <>
-        <Hero />
-        <HomeGrid />
-      </>
-    )
+    element: <Home />
   }
 ])
 

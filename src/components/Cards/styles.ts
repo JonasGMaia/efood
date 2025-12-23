@@ -24,14 +24,19 @@ export const CardSubContainer = styled.div<SubCardProps>`
   padding: ${(props) => (props.kind === 'text' ? '10px' : '0')};
   background-color: ${(props) =>
     props.kind === 'text' ? cores.branco : 'transparent'};
-
-  h2 {
-    font-size: 18px;
-    font-weight: bold;
-  }
-
-  p {
-    width: 100%;
-    font-size: 14px;
-  }
+`
+export const Name = styled.h2`
+  font-size: 18px;
+  font-weight: bold;
+`
+export const Description = styled.p`
+  width: 100%;
+  font-size: 14px;
+`
+export const TagRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  position: absolute;
+  right: 10px;
+  top: 8px;
 `

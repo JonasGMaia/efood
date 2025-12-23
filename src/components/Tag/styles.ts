@@ -7,14 +7,16 @@ export const TagContainer = styled.div<TagProps>`
   background-color: ${cores.rosa1};
   color: ${cores.rosa2};
   font-style: Bold;
-  font-size: 12px
+  font-size: 12px;
+  padding: 15px;
   text-align: center;
   text-decoration: none;
   height: 24px;
-  width: 82px;
+  width: auto;
   display: flex;
   align-items: center;
   justify-content: center;
+  margin: 10px;
 `
 export const TagLink = styled(Link)<TagProps>`
   background-color: ${cores.rosa1};

@@ -1,9 +1,13 @@
 import estrela from '../../assets/images/estrela.png'
 import { RattingContainer } from './styles'
 
-const Ratting = () => (
+type RattingProps = {
+  children: string
+}
+
+const Ratting = ({ children }: RattingProps) => (
   <RattingContainer>
-    <h2>4.5</h2>
+    <h2>{children}</h2>
     <img src={estrela} alt="estrelas" />
   </RattingContainer>
 )

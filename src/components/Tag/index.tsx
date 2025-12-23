@@ -1,15 +1,15 @@
 import { TagContainer, TagLink } from './styles'
 export type TagProps = {
   children?: string
-  type: 'descriptor' | 'link'
+  type: 'category' | 'link'
   title?: string
   to?: string
   onClick?: () => void
 }
 const Tag = ({ children, type, title, to, onClick }: TagProps) => {
-  if (type === 'descriptor') {
+  if (type === 'category') {
     return (
-      <TagContainer type="descriptor" title={title} onClick={onClick}>
+      <TagContainer type="category" title={title} onClick={onClick}>
         {children}
       </TagContainer>
     )

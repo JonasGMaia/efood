@@ -1,34 +1,49 @@
-import Hero from '../../components/Hero'
-import HomeGrid from '../../components/HomeGrids'
-import imagem1 from '../../assets/images/imagem1.png'
-import imagem2 from '../../assets/images/imagem2.png'
-import HomeCard from '../../models/HomeCard'
+import HeroProfile from '../../components/HeroProfile'
+import ProfileGrid from '../../components/ProfileGrids'
+import ProfileCard from '../../models/ProfileCard'
+import imagem3 from '../../assets/images/imagem3.png'
 
-const homeContents: HomeCard[] = [
+const products: ProfileCard[] = [
   {
-    title: 'Hioki Sushi',
-    categories: ['Japonesa', 'Destaque da Semana'],
+    title: 'Marguerita',
     description:
-      'Peça já o melhor da culinária japonesa no conforto da sua casa! Sushis frescos, sashimis deliciosos e pratos quentes irresistíveis. Entrega rápida, embalagens cuidadosas e qualidade garantida.Experimente o Japão sem sair do lar com nosso delivery!',
-    image: imagem1,
-    ratting: '5.0',
+      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
+    image: imagem3,
     id: 1
   },
   {
-    title: 'La Dolce Vita Trattoria',
-    categories: ['Italiana'],
+    title: 'Marguerita',
     description:
-      'A La Dolce Vita Trattoria leva a autêntica cozinha italiana até você! Desfrute de massas caseiras, pizzas deliciosas e risotos incríveis, tudo no conforto do seu lar. Entrega rápida, pratos bem embalados e sabor inesquecível. Peça já!',
-    image: imagem2,
-    ratting: '4.6',
+      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
+    image: imagem3,
     id: 2
+  },
+  {
+    title: 'Marguerita',
+    description:
+      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
+    image: imagem3,
+    id: 3
+  },
+  {
+    title: 'Marguerita',
+    description:
+      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
+    image: imagem3,
+    id: 4
+  },
+  {
+    title: 'Marguerita',
+    description:
+      'A clássica Marguerita: molho de tomate suculento, mussarela derretida, manjericão fresco e um toque de azeite. Sabor e simplicidade!',
+    image: imagem3,
+    id: 5
   }
 ]
-
 const Profile = () => (
   <>
-    <Hero />
-    <HomeGrid homeCards={homeContents} />
+    <HeroProfile />
+    <ProfileGrid profileCardsfunction={products} />
   </>
 )
 

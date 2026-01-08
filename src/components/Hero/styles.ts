@@ -6,7 +6,11 @@ export const HeroHeader = styled.header`
   background-position: center;
   color: ${cores.rosa1};
   width: 100%;
-  height: 384px;
+  min-height: 384px;
+
+  a {
+    color: ${cores.rosa1};
+  }
 `
 export const Organizer = styled.div`
   max-height: 384px;

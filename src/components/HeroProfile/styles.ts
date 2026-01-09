@@ -15,6 +15,7 @@ export const TitleProfile = styled.h1`
   font-size: 32px;
   font-weight: 900;
   padding-bottom: 10px;
+  z-index: 1;
 `
 export const CategProfile = styled.p`
   color: ${cores.branco};
@@ -22,6 +23,7 @@ export const CategProfile = styled.p`
   font-style: thin;
   font-weight: 100;
   padding-top: 10px;
+  z-index: 1;
 `
 export const CategProfileBanner = styled.div`
   display: flex;
@@ -35,4 +37,15 @@ export const ProfileBanner = styled.div`
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  position: relative;
+
+  &::after {
+    content: '';
+    background-color: ${cores.darkLayer1};
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
 `

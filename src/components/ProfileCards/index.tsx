@@ -1,4 +1,4 @@
-import AddButton from '../AddButton/intex'
+import AddButton from '../AddButton'
 import { PCArea, PCContainer, PCContent } from './styles'
 
 type ProfileCardsProps = {

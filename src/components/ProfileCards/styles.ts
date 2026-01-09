@@ -7,12 +7,15 @@ export const PCArea = styled.div`
   align-items: center;
   background-color: ${cores.rosa1};
   width: 320px;
+  height: 100%;
+  cursor: pointer;
 `
 export const PCContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 8px;
+  height: 100%;
 
   img {
     width: 100%;
@@ -23,6 +26,7 @@ export const PCContent = styled.div`
   flex-direction: column;
   text-align: left;
   color: ${cores.rosa2};
+  height: 100%;
 
   p {
     width: 100%;

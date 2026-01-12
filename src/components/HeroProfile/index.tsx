@@ -9,14 +9,19 @@ import {
 } from './styles'
 import logo from '../../assets/images/logo.png'
 import fundoHero from '../../assets/images/fundoHero.png'
-import imagem2 from '../../assets/images/imagem2.png'
 
-const HeroProfile = () => (
+type Props = {
+  tipo: string
+  titulo: string
+  capa: string
+}
+
+const HeroProfile = ({ tipo, titulo, capa }: Props) => (
   <HeroHeader style={{ backgroundImage: `url(${fundoHero})` }}>
     <div className="container">
       <OrganizerProfile>
         <Link to="/">
-          <h2>Restaurantes</h2>
+          <h2 style={{ cursor: 'pointer' }}>Restaurantes</h2>
         </Link>
         <Link to="/">
           <Logo src={logo} alt="efood" />
@@ -24,11 +29,11 @@ const HeroProfile = () => (
         <h2>0 produto(s) no carrinho</h2>
       </OrganizerProfile>
     </div>
-    <ProfileBanner style={{ backgroundImage: `url(${imagem2})` }}>
+    <ProfileBanner style={{ backgroundImage: `url(${capa})` }}>
       <div className="container">
         <CategProfileBanner>
-          <CategProfile>Italiana</CategProfile>
-          <TitleProfile>NNome do restaurante</TitleProfile>
+          <CategProfile>{tipo}</CategProfile>
+          <TitleProfile>{titulo}</TitleProfile>
         </CategProfileBanner>
       </div>
     </ProfileBanner>

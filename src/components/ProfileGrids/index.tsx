@@ -1,27 +1,26 @@
 import { useState } from 'react'
 import ProfileCards from '../ProfileCards'
-import ProfileCard from '../../models/ProfileCard'
 import { ProfileGrids } from './style'
 import Modal from '../Modal'
+import { Card } from '../../pages/Home'
 
 export type ProfileGridProps = {
-  profileCardsfunction?: ProfileCard[]
+  profileCardsfunction: Card
 }
 
 const ProfileGrid = ({ profileCardsfunction }: ProfileGridProps) => {
-  const [isCardSelected, setIsCardSelected] = useState<ProfileCard | null>(null)
+  const [isCardSelected, setIsCardSelected] = useState<any | null>(null)
 
   return (
     <>
       <div className="container">
         <ProfileGrids>
-          {profileCardsfunction?.map((card) => (
-            <div key={card.id} onClick={() => setIsCardSelected(card)}>
+          {profileCardsfunction?.cardapio?.map((item) => (
+            <div key={item.id} onClick={() => setIsCardSelected(item)}>
               <ProfileCards
-                key={card.id}
-                title={card.title}
-                description={card.description || ''}
-                image={card.image}
+                descricao={item.descricao}
+                imagem={item.foto}
+                titulo={item.nome}
               />
             </div>
           ))}

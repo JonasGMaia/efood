@@ -1,22 +1,26 @@
 import AddButton from '../AddButton'
 import { PCArea, PCContainer, PCContent } from './styles'
 
-type ProfileCardsProps = {
-  title: string
-  description: string
-  image: string
+type Porps = {
+  titulo: string
+  descricao: string
+  imagem: string
 }
 
-const ProfileCards = ({ title, description, image }: ProfileCardsProps) => (
-  <PCArea>
-    <PCContainer>
-      <img src={image} alt="" />
-      <PCContent>
-        <h2>{title}</h2>
-        <p>{description}</p>
-      </PCContent>
-      <AddButton />
-    </PCContainer>
-  </PCArea>
-)
+const ProfileCards = ({ titulo, descricao, imagem }: Porps) => {
+  return (
+    <>
+      <PCArea>
+        <PCContainer>
+          <img src={imagem} />
+          <PCContent>
+            <h2>{titulo}</h2>
+            <p>{descricao}</p>
+          </PCContent>
+          <AddButton />
+        </PCContainer>
+      </PCArea>
+    </>
+  )
+}
 export default ProfileCards

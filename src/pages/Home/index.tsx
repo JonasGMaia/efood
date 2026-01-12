@@ -55,15 +55,15 @@ import { useEffect } from 'react'
 //   }
 // ]
 
-type Card = {
-  id: number
-  title: string
-  destacado: boolean
-  tipo: string
-  avaliacao: number
-  descricao: string
-  capa: string
-  cardapio: {
+export type Card = {
+  id?: number
+  titulo?: string
+  destacado?: boolean
+  tipo?: string
+  avaliacao?: number
+  descricao?: string
+  capa?: string
+  cardapio?: {
     foto: string
     preco: number
     id: number

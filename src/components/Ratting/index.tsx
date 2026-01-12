@@ -1,13 +1,10 @@
 import estrela from '../../assets/images/estrela.png'
 import { RattingContainer } from './styles'
+import type { Card } from '../../pages/Home'
 
-type RattingProps = {
-  children: string
-}
-
-const Ratting = ({ children }: RattingProps) => (
+const Ratting = ({ avaliacao }: Card) => (
   <RattingContainer>
-    <h2>{children}</h2>
+    <h2>{avaliacao}</h2>
     <img src={estrela} alt="estrelas" />
   </RattingContainer>
 )

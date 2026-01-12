@@ -1,24 +1,16 @@
-import { TagContainer, TagLink } from './styles'
-export type TagProps = {
-  children?: string
-  type: 'category' | 'link'
-  title?: string
-  to?: string
-  onClick?: () => void
-}
-const Tag = ({ children, type, title, to, onClick }: TagProps) => {
-  if (type === 'category') {
-    return (
-      <TagContainer type="category" title={title} onClick={onClick}>
-        {children}
-      </TagContainer>
-    )
-  }
-  return (
-    <TagLink type="link" title={title} to={to as string} onClick={onClick}>
-      {children}
-    </TagLink>
-  )
+import { TagContainer } from './styles'
+
+export type Props = {
+  destacado?: boolean
+  tipo?: string
 }
 
+const Tag = ({ destacado, tipo }: Props) => {
+  return (
+    <div style={{ display: 'flex', gap: '8px' }}>
+      {destacado && <TagContainer>Destaque da semana</TagContainer>}
+      <TagContainer>{tipo}</TagContainer>
+    </div>
+  )
+}
 export default Tag

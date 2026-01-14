@@ -12,4 +12,5 @@ export const AddButtonContainer = styled.button`
   font-size: 14px;
   font-style: bold;
   font-weight: 700;
+  cursor: pointer;
 `

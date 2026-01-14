@@ -1,6 +1,8 @@
 import AddButton from '../AddButton'
 import { ModalContainer, Overlay, ModalSubContainer, Close } from './styles'
 import close from '../../assets/images/close.png'
+import { useDispatch } from 'react-redux'
+import { add, open } from '../../store/reducers/cart'
 
 type ModalProps = {
   card: {
@@ -15,14 +17,23 @@ type ModalProps = {
 }
 
 const Modal = ({ card, onClose }: ModalProps) => {
+  const dispatch = useDispatch()
+
   if (!card) {
     return null
+  }
+
+  const handleAddToCart = () => {
+    dispatch(add(card))
+    dispatch(open())
   }
 
   const formatPreco = (preco: number) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
-      currency: 'BRL'
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
     }).format(preco)
   }
 
@@ -37,6 +48,7 @@ const Modal = ({ card, onClose }: ModalProps) => {
             <p style={{ whiteSpace: 'pre-wrap' }}>{card?.descricao}</p>
             <p>Serve {card?.porcao}</p>
             <AddButton
+              onClick={handleAddToCart}
               content={`Adicionar ao carrinho - `}
               price={formatPreco(card?.preco)}
             />

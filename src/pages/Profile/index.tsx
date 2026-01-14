@@ -1,31 +1,24 @@
-import { useEffect } from 'react'
-import { useState } from 'react'
 import { useParams } from 'react-router-dom'
 import HeroProfile from '../../components/HeroProfile'
 import ProfileGrid from '../../components/ProfileGrids'
-import type { Card } from '../Home'
+import { useGetRestauranteIdQuery } from '../../services/api'
 
 const Profile = () => {
-  const { id } = useParams()
-  const [restaurantes, setRestaurantes] = useState<Card | null>(null)
+  const { id } = useParams<{ id: string }>()
+  const { data: restaurante, isLoading } = useGetRestauranteIdQuery(id || '')
 
-  useEffect(() => {
-    fetch(`https://api-ebac.vercel.app/api/efood/restaurantes/${id}`)
-      .then((response) => response.json())
-      .then((data) => {
-        setRestaurantes(data)
-      })
-      .catch((error) => console.error('Erro ao carregar restaurante:', error))
-  }, [id])
+  if (isLoading) return <h3>Carregando...</h3>
+
+  if (!restaurante) return <h3>Restaurante não encontrado</h3>
 
   return (
     <>
       <HeroProfile
-        tipo={restaurantes?.tipo || ''}
-        titulo={restaurantes?.titulo || ''}
-        capa={restaurantes?.capa || ''}
+        capa={restaurante?.capa}
+        titulo={restaurante?.titulo}
+        tipo={restaurante?.tipo}
       />
-      {restaurantes && <ProfileGrid profileCardsfunction={restaurantes} />}
+      <ProfileGrid profileCardsfunction={restaurante} />
     </>
   )
 }

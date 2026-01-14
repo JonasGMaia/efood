@@ -49,3 +49,11 @@ export const ProfileBanner = styled.div`
     height: 100%;
   }
 `
+export const CartButton = styled.button`
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  background: none;
+  font-size: 14px;
+  color: ${cores.rosa1};
+`

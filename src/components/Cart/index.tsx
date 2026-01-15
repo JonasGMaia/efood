@@ -13,9 +13,15 @@ import {
 } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
-import { close, remove } from '../../store/reducers/cart'
+import {
+  close,
+  remove,
+  setStep,
+  selectTotalNoCarrinho
+} from '../../store/reducers/cart'
 
 const Cart = () => {
+  const valorTotal = useSelector(selectTotalNoCarrinho)
   const paraReal = (valor = 0) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
@@ -55,11 +61,9 @@ const Cart = () => {
         </ul>
         <SidebarDetails>
           <p>Valor total:</p>
-          <p>
-            {paraReal(items.reduce((total, item) => total + item.preco, 0))}
-          </p>
+          <p>{paraReal(valorTotal)}</p>
         </SidebarDetails>
-        <SideBarButton>
+        <SideBarButton onClick={() => dispatch(setStep('delivery'))}>
           <AddButtonContainer className="buyButton">
             Continuar com a entrega
           </AddButtonContainer>

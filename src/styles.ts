@@ -6,7 +6,8 @@ export const cores = {
   rosa3: '#FFEBD9',
   branco: '#FFFFFF',
   darkLayer1: '#00000080',
-  darkLayer2: '#000000CC'
+  darkLayer2: '#000000CC',
+  cinza: '#6b6b6bff'
 }
 
 export const breakpoints = {

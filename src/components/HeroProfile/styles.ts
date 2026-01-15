@@ -48,6 +48,7 @@ export const ProfileBanner = styled.div`
   background-position: center;
   background-repeat: no-repeat;
   position: relative;
+  margin-top: 30px;
 
   &::after {
     content: '';

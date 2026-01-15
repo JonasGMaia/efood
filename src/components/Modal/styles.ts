@@ -20,7 +20,7 @@ export const ModalContainer = styled.div`
   height: 344px;
   align-items: line-start;
   position: relative;
-  padding: 20px;
+  padding: 30px;
 
   @media (max-width: ${breakpoints.desktop}) {
     height: fit-content;

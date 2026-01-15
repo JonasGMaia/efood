@@ -7,7 +7,7 @@ export const HeroHeader = styled.header`
   background-position: center;
   color: ${cores.rosa1};
   width: 100%;
-  min-height: 384px;
+  min-height: 374px;
 
   a {
     color: ${cores.rosa1};

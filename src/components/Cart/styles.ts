@@ -21,8 +21,6 @@ export const Sidebar = styled.aside`
   max-width: 360px;
   width: 100%;
   overflow-y: auto;
-  export const Sidebar = styled.aside
-  overflow-y: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
   &::-webkit-scrollbar {

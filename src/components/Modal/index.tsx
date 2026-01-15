@@ -26,6 +26,7 @@ const Modal = ({ card, onClose }: ModalProps) => {
   const handleAddToCart = () => {
     dispatch(add(card))
     dispatch(open())
+    onClose()
   }
 
   const formatPreco = (preco: number) => {

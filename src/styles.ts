@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import { createGlobalStyle } from 'styled-components'
 
 export const cores = {
   rosa1: '#E66767',
@@ -9,6 +9,11 @@ export const cores = {
   darkLayer2: '#000000CC'
 }
 
+export const breakpoints = {
+  desktop: '1024px',
+  tablet: '768px'
+}
+
 export const GlobalCss = createGlobalStyle`
   *{
     margin: 0;
@@ -16,16 +21,29 @@ export const GlobalCss = createGlobalStyle`
     box-sizing: border-box;
     font-family: 'Roboto', sans-serif;
   }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
     body {
     background-color: ${cores.rosa2};
     color: ${cores.rosa1};
+    display: flex;
+    flex-direction: column;
   }
     .container {
     max-width: 1024px;
     width: 100%;
     margin: 0 auto;
-    padding: 20px 20px;
+    padding: 0px 20px;
+
+    @media (max-width: ${breakpoints.desktop}) {
+      max-width: 80%;
+    }
   }
     a{
     text-decoration: none;}
+
   `

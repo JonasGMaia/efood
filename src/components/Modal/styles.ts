@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { breakpoints, cores } from '../../styles'
 
 export const Overlay = styled.div`
   background-color: ${cores.darkLayer2};
@@ -20,10 +20,28 @@ export const ModalContainer = styled.div`
   height: 344px;
   align-items: line-start;
   position: relative;
+  padding: 20px;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    height: fit-content;
+    padding: 20px;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    padding: 20px;
+  }
 
   img {
     width: 280px;
     object-fit: cover;
+
+    @media (max-width: ${breakpoints.tablet}) {
+      width: 100%;
+      margin-top: 16px;
+    }
   }
 `
 export const ModalSubContainer = styled.div`
@@ -46,4 +64,8 @@ export const Close = styled.img`
   right: 20px;
   cursor: pointer;
   max-width: 16px;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    top: -4px;
+  }
 `

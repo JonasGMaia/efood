@@ -33,12 +33,14 @@ const HeroProfile = ({ tipo, titulo, capa }: Props) => {
       <div className="container">
         <OrganizerProfile>
           <Link to="/">
-            <h2 style={{ cursor: 'pointer' }}>Restaurantes</h2>
+            <h2 className="restaurantesH2" style={{ cursor: 'pointer' }}>
+              Restaurantes
+            </h2>
           </Link>
-          <Link to="/">
+          <Link className="restaurantes" to="/">
             <Logo src={logo} alt="efood" />
           </Link>
-          <CartButton onClick={handleOpenCart}>
+          <CartButton className="restaurantes" onClick={handleOpenCart}>
             <h2>{items.length} produto(s) no carrinho</h2>
           </CartButton>
         </OrganizerProfile>

@@ -18,6 +18,9 @@ const cartSlice = createSlice({
     add: (state, action: PayloadAction<CardapioItem>) => {
       state.items.push(action.payload)
     },
+    remove: (state, action: PayloadAction<number>) => {
+      state.items.splice(action.payload, 1)
+    },
     open: (state) => {
       state.isOpen = true
     },
@@ -27,5 +30,5 @@ const cartSlice = createSlice({
   }
 })
 
-export const { add, open, close } = cartSlice.actions
+export const { add, open, close, remove } = cartSlice.actions
 export default cartSlice.reducer

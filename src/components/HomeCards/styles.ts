@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { cores } from '../../styles'
 import { SubCardProps } from '.'
+import { breakpoints } from '../../styles'
 
 export const CardsContainer = styled.div`
 background-color ${cores.branco};
@@ -11,6 +12,10 @@ flex-direction: column;
 border: 1px solid ${cores.rosa1};
 color: ${cores.rosa1};
 position: relative;
+
+@media (max-width: ${breakpoints.desktop}) {
+    width: 100%;
+  }
 `
 export const CardSubContainer = styled.div<SubCardProps>`
   display: flex;

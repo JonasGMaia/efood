@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { breakpoints, cores } from '../../styles'
 
 export const PCArea = styled.div`
   display: flex;
@@ -9,6 +9,14 @@ export const PCArea = styled.div`
   width: 320px;
   height: 100%;
   cursor: pointer;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    width: 100%;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 100%;
+  }
 `
 export const PCContainer = styled.div`
   display: flex;

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { cores } from '../../styles'
+import { breakpoints } from '../../styles'
 
 export const OrganizerProfile = styled.div`
   max-height: 384px;
@@ -9,6 +10,15 @@ export const OrganizerProfile = styled.div`
   text-align: center;
   align-items: center;
   font-size: 14px;
+
+  @media (max-width: ${breakpoints.desktop}) {
+    .restaurantes {
+      width: 100%;
+    }
+    .restaurantesH2 {
+      display: none;
+    }
+  }
 `
 export const TitleProfile = styled.h1`
   color: ${cores.branco};

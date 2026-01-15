@@ -13,7 +13,7 @@ import {
 } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
-import { close } from '../../store/reducers/cart'
+import { close, remove } from '../../store/reducers/cart'
 
 const Cart = () => {
   const paraReal = (valor = 0) => {
@@ -27,21 +27,28 @@ const Cart = () => {
   const handleCloseCart = () => {
     dispatch(close())
   }
+  const removeItem = (id: number) => {
+    dispatch(remove(id))
+  }
 
   return (
     <CartContainer className={isOpen ? 'is-open' : ''}>
       <Overlay onClick={handleCloseCart} style={{ position: 'absolute' }} />
       <Sidebar>
         <ul>
-          {items.map((item) => (
-            <CartItem key={item.id}>
+          {items.map((item, index) => (
+            <CartItem key={index}>
               <CartImage>
                 <img src={item.foto} alt="" />
               </CartImage>
               <CartItemDetails>
                 <h3>{item.nome}</h3>
                 <p>{paraReal(item.preco)}</p>
-                <LixeiraIcone src={lixeira} alt="remover item do carrinho" />
+                <LixeiraIcone
+                  onClick={() => removeItem(index)}
+                  src={lixeira}
+                  alt="remover item do carrinho"
+                />
               </CartItemDetails>
             </CartItem>
           ))}

@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { cores } from '../../styles'
+import { breakpoints } from '../../styles'
 
 export const HeroHeader = styled.header`
   background-size: cover;
@@ -20,11 +21,18 @@ export const Organizer = styled.div`
   text-align: center;
   align-items: center;
   gap: 140px;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    max-height: 100%;
+  }
 `
 
 export const ChamadaHero = styled.h1`
   font-size: 36px;
   width: 539px;
+  @media (max-width: ${breakpoints.desktop}) {
+    width: 80%;
+  }
 `
 export const Logo = styled.img`
   width: 125px;

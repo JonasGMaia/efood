@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { cores } from '../../styles'
+import { breakpoints, cores } from '../../styles'
 
 export const CartContainer = styled.div`
   position: fixed;
@@ -21,6 +21,17 @@ export const Sidebar = styled.aside`
   max-width: 360px;
   width: 100%;
   overflow-y: auto;
+  export const Sidebar = styled.aside
+  overflow-y: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 70%;
+  }
 `
 export const CartItem = styled.li`
   display: flex;

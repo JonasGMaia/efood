@@ -7,8 +7,10 @@ import { setStep } from '../../store/reducers/cart'
 import { FormContainer, FormRow, BtnContainer } from './styles'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
+import { usePurchaseMutation } from '../../services/api'
 
 const Delivery = () => {
+  const [purchase, { isError, isLoading, data }] = usePurchaseMutation()
   const { isOpen } = useSelector((state: RootReducer) => state.cart)
   const dispatch = useDispatch()
   const formValid = useFormik({
@@ -33,7 +35,18 @@ const Delivery = () => {
         .required('O campo é obrigatório')
     }),
     onSubmit: (values) => {
-      console.log(values)
+      purchase({
+        delivery: {
+          receiver: values.fullName,
+          address: {
+            description: values.adress,
+            city: values.city,
+            zipCode: values.cep,
+            number: Number(values.phoneNumber),
+            complement: values.comment
+          }
+        }
+      })
     }
   })
 

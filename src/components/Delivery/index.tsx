@@ -1,18 +1,18 @@
+import { useDispatch, useSelector } from 'react-redux'
+import { useFormik } from 'formik'
+import * as Yup from 'yup'
+
 import { AddButtonContainer } from '../AddButton/styles'
 import { Overlay } from '../Modal/styles'
 import { CartContainer, Sidebar } from '../Cart/styles'
-import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
-import { setStep } from '../../store/reducers/cart'
+import { setStep, setDeliveryData } from '../../store/reducers/cart'
 import { FormContainer, FormRow, BtnContainer } from './styles'
-import { useFormik } from 'formik'
-import * as Yup from 'yup'
-import { usePurchaseMutation } from '../../services/api'
 
 const Delivery = () => {
-  const [purchase, { isError, isLoading, data }] = usePurchaseMutation()
   const { isOpen } = useSelector((state: RootReducer) => state.cart)
   const dispatch = useDispatch()
+
   const formValid = useFormik({
     initialValues: {
       fullName: '',
@@ -28,15 +28,15 @@ const Delivery = () => {
         .required('O campo é obrigatório'),
       adress: Yup.string().required('O campo é obrigatório'),
       city: Yup.string().required('O campo é obrigatório'),
-      cep: Yup.string().min(9).max(9).required('O campo é obrigatório'),
-      phoneNumber: Yup.string()
-        .min(14)
-        .max(16)
-        .required('O campo é obrigatório')
+      cep: Yup.string()
+        .min(9, 'CEP inválido')
+        .max(9, 'CEP inválido')
+        .required('O campo é obrigatório'),
+      phoneNumber: Yup.string().required('O campo é obrigatório')
     }),
     onSubmit: (values) => {
-      purchase({
-        delivery: {
+      dispatch(
+        setDeliveryData({
           receiver: values.fullName,
           address: {
             description: values.adress,
@@ -45,16 +45,17 @@ const Delivery = () => {
             number: Number(values.phoneNumber),
             complement: values.comment
           }
-        }
-      })
+        })
+      )
+      dispatch(setStep('payment'))
     }
   })
 
-  const getErrorMessage = (fieldName: string, message?: string) => {
-    const isAltered = fieldName in formValid.touched
-    const isInvalid = fieldName in formValid.errors
+  const getErrorMessage = (fieldName: keyof typeof formValid.values) => {
+    const isAltered = formValid.touched[fieldName]
+    const isInvalid = formValid.errors[fieldName]
 
-    if (isAltered && isInvalid) return message
+    if (isAltered && isInvalid) return isInvalid
     return ''
   }
 
@@ -75,9 +76,7 @@ const Delivery = () => {
                 onChange={formValid.handleChange}
                 onBlur={formValid.handleBlur}
               />
-              <small>
-                {(getErrorMessage('fullName'), formValid.errors.fullName)}
-              </small>
+              <small>{getErrorMessage('fullName')}</small>
             </div>
             <div>
               <label htmlFor="adress">Endereço</label>
@@ -89,9 +88,7 @@ const Delivery = () => {
                 onChange={formValid.handleChange}
                 onBlur={formValid.handleBlur}
               />
-              <small>
-                {(getErrorMessage('adress'), formValid.errors.adress)}
-              </small>
+              <small>{getErrorMessage('adress')}</small>
             </div>
             <div>
               <label htmlFor="city">Cidade</label>
@@ -103,7 +100,7 @@ const Delivery = () => {
                 onChange={formValid.handleChange}
                 onBlur={formValid.handleBlur}
               />
-              <small>{(getErrorMessage('city'), formValid.errors.city)}</small>
+              <small>{getErrorMessage('city')}</small>
             </div>
             <FormRow>
               <div>
@@ -116,7 +113,7 @@ const Delivery = () => {
                   onChange={formValid.handleChange}
                   onBlur={formValid.handleBlur}
                 />
-                <small>{(getErrorMessage('cep'), formValid.errors.cep)}</small>
+                <small>{getErrorMessage('cep')}</small>
               </div>
               <div>
                 <label htmlFor="phoneNumber">Número</label>
@@ -128,12 +125,7 @@ const Delivery = () => {
                   onChange={formValid.handleChange}
                   onBlur={formValid.handleBlur}
                 />
-                <small>
-                  {
-                    (getErrorMessage('phoneNumber'),
-                    formValid.errors.phoneNumber)
-                  }
-                </small>
+                <small>{getErrorMessage('phoneNumber')}</small>
               </div>
             </FormRow>
             <div>
@@ -149,10 +141,10 @@ const Delivery = () => {
             </div>
           </FormContainer>
           <BtnContainer>
-            <button onClick={() => dispatch(setStep('payment'))}>
+            <button type="submit" onClick={() => dispatch(setStep('payment'))}>
               <AddButtonContainer>Continuar com pagamento</AddButtonContainer>
             </button>
-            <button onClick={() => dispatch(setStep('cart'))}>
+            <button type="button" onClick={() => dispatch(setStep('cart'))}>
               <AddButtonContainer>Voltar para o carrinho</AddButtonContainer>
             </button>
           </BtnContainer>

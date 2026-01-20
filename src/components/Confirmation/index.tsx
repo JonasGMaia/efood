@@ -5,10 +5,14 @@ import { useSelector, useDispatch } from 'react-redux'
 import { RootReducer } from '../../store'
 import { BtnContainer, FormContainer } from '../Delivery/styles'
 import { close, reset } from '../../store/reducers/cart'
+import { usePurchaseMutation } from '../../services/api'
 
 const Confirmation = () => {
   const { isOpen } = useSelector((state: RootReducer) => state.cart)
   const dispatch = useDispatch()
+  const [_, { data }] = usePurchaseMutation({
+    fixedCacheKey: 'checkout-mutation'
+  })
   const handleCloseCart = () => {
     dispatch(close())
     dispatch(reset())
@@ -19,7 +23,7 @@ const Confirmation = () => {
       <Overlay style={{ position: 'absolute' }} />
       <Sidebar>
         <FormContainer>
-          <h2>Pedido realizado - ORDER_ID</h2>
+          <h2>Pedido realizado - {data?.orderId} </h2>
           <p style={{ fontWeight: '400' }}>
             Estamos felizes em informar que seu pedido já está em processo de
             preparação e, em breve, será entregue no endereço fornecido.

@@ -1,23 +1,38 @@
-import { AddButtonContainer } from '../AddButton/styles'
-import { Overlay } from '../Modal/styles'
-import { CartContainer, Sidebar } from '../Cart/styles'
+import { useEffect } from 'react' // Importação necessária para o sucesso
 import { useDispatch, useSelector } from 'react-redux'
-import { RootReducer } from '../../store'
-import { setStep, selectTotalNoCarrinho } from '../../store/reducers/cart'
-import { FormContainer, FormRow, BtnContainer } from '../Delivery/styles'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
+import { AddButtonContainer } from '../AddButton/styles'
+import { Overlay } from '../Modal/styles'
+import { CartContainer, Sidebar } from '../Cart/styles'
+import { RootReducer } from '../../store'
+import { setStep, selectTotalNoCarrinho } from '../../store/reducers/cart'
+import { FormContainer, FormRow, BtnContainer } from '../Delivery/styles'
+import { usePurchaseMutation } from '../../services/api'
+
 const Payment = () => {
+  const dispatch = useDispatch()
+  const [purchase, { isSuccess, data }] = usePurchaseMutation()
+
+  const { items, delivery, isOpen } = useSelector(
+    (state: RootReducer) => state.cart
+  )
   const valorTotal = useSelector(selectTotalNoCarrinho)
+
   const paraReal = (valor = 0) => {
     return new Intl.NumberFormat('pt-BR', {
       style: 'currency',
       currency: 'BRL'
     }).format(valor)
   }
-  const { isOpen } = useSelector((state: RootReducer) => state.cart)
-  const dispatch = useDispatch()
+
+  useEffect(() => {
+    if (isSuccess && data) {
+      dispatch(setStep('confirmation'))
+    }
+  }, [isSuccess, data, dispatch])
+
   const formValid = useFormik({
     initialValues: {
       CardName: '',
@@ -31,30 +46,47 @@ const Payment = () => {
         .min(5, 'O nome deve ter pelo menos 5 caracteres')
         .required('O campo é obrigatório'),
       CardNumber: Yup.string()
-        .min(13)
-        .max(19)
+        .min(13, 'Número inválido')
+        .max(19, 'Número inválido')
         .required('O campo é obrigatório'),
       cvv: Yup.string()
-        .min(3)
-        .max(3, 'O nome deve ter pelo menos 3 caracteres')
+        .length(3, 'Deve ter 3 dígitos')
         .required('O campo é obrigatório'),
       validadeMes: Yup.string()
-        .min(2)
-        .max(2)
-        .matches(/^(0[1-9]|1[0-2])$/, 'Mês inválido (use o formato 01 a 12)')
+        .length(2, 'Use 2 dígitos')
+        .matches(/^(0[1-9]|1[0-2])$/, 'Mês inválido')
         .required('O campo é obrigatório'),
-      validadeAno: Yup.string().min(4).max(4).required('O campo é obrigatório')
+      validadeAno: Yup.string()
+        .length(4, 'Use 4 dígitos')
+        .required('O campo é obrigatório')
     }),
     onSubmit: (values) => {
-      console.log(values)
+      purchase({
+        products: items.map((item) => ({
+          id: item.id,
+          price: item.preco
+        })),
+        delivery: delivery,
+        payment: {
+          card: {
+            name: values.CardName,
+            number: values.CardNumber,
+            code: Number(values.cvv),
+            expires: {
+              month: Number(values.validadeMes),
+              year: Number(values.validadeAno)
+            }
+          }
+        }
+      })
     }
   })
 
-  const getErrorMessage = (fieldName: string, message?: string) => {
-    const isAltered = fieldName in formValid.touched
-    const isInvalid = fieldName in formValid.errors
+  const getErrorMessage = (fieldName: keyof typeof formValid.values) => {
+    const isAltered = formValid.touched[fieldName]
+    const isInvalid = formValid.errors[fieldName]
 
-    if (isAltered && isInvalid) return message
+    if (isAltered && isInvalid) return isInvalid
     return ''
   }
 
@@ -75,9 +107,7 @@ const Payment = () => {
                 onChange={formValid.handleChange}
                 onBlur={formValid.handleBlur}
               />
-              <small>
-                {(getErrorMessage('CardName'), formValid.errors.CardName)}
-              </small>
+              <small>{getErrorMessage('CardName')}</small>
             </div>
             <FormRow>
               <div>
@@ -90,9 +120,7 @@ const Payment = () => {
                   onChange={formValid.handleChange}
                   onBlur={formValid.handleBlur}
                 />
-                <small>
-                  {(getErrorMessage('CardNumber'), formValid.errors.CardNumber)}
-                </small>
+                <small>{getErrorMessage('CardNumber')}</small>
               </div>
               <div>
                 <label htmlFor="cvv">CVV</label>
@@ -104,7 +132,7 @@ const Payment = () => {
                   onChange={formValid.handleChange}
                   onBlur={formValid.handleBlur}
                 />
-                <small>{(getErrorMessage('cvv'), formValid.errors.cvv)}</small>
+                <small>{getErrorMessage('cvv')}</small>
               </div>
             </FormRow>
             <FormRow>
@@ -118,12 +146,7 @@ const Payment = () => {
                   onChange={formValid.handleChange}
                   onBlur={formValid.handleBlur}
                 />
-                <small>
-                  {
-                    (getErrorMessage('validadeMes'),
-                    formValid.errors.validadeMes)
-                  }
-                </small>
+                <small>{getErrorMessage('validadeMes')}</small>
               </div>
               <div>
                 <label htmlFor="validadeAno">Ano de vencimento</label>
@@ -135,20 +158,18 @@ const Payment = () => {
                   onChange={formValid.handleChange}
                   onBlur={formValid.handleBlur}
                 />
-                <small>
-                  {
-                    (getErrorMessage('validadeAno'),
-                    formValid.errors.validadeAno)
-                  }
-                </small>
+                <small>{getErrorMessage('validadeAno')}</small>
               </div>
             </FormRow>
           </FormContainer>
           <BtnContainer>
-            <button onClick={() => dispatch(setStep('confirmation'))}>
+            <button
+              type="submit"
+              onClick={() => dispatch(setStep('confirmation'))}
+            >
               <AddButtonContainer>Finalizar pagamento</AddButtonContainer>
             </button>
-            <button onClick={() => dispatch(setStep('delivery'))}>
+            <button type="button" onClick={() => dispatch(setStep('delivery'))}>
               <AddButtonContainer>
                 Voltar para edição de endereço
               </AddButtonContainer>

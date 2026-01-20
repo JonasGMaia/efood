@@ -38,8 +38,12 @@ const Payment = () => {
         .min(3)
         .max(3, 'O nome deve ter pelo menos 3 caracteres')
         .required('O campo é obrigatório'),
-      validadeMes: Yup.string().min(2).max(2).required('O campo é obrigatório'),
-      validadeAno: Yup.string().min(2).max(2).required('O campo é obrigatório')
+      validadeMes: Yup.string()
+        .min(2)
+        .max(2)
+        .matches(/^(0[1-9]|1[0-2])$/, 'Mês inválido (use o formato 01 a 12)')
+        .required('O campo é obrigatório'),
+      validadeAno: Yup.string().min(4).max(4).required('O campo é obrigatório')
     }),
     onSubmit: (values) => {
       console.log(values)

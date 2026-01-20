@@ -40,7 +40,7 @@ const Cart = () => {
   }
 
   return (
-    <CartContainer className={'isOpen'}>
+    <CartContainer className={'"is-open"'}>
       <Overlay onClick={handleCloseCart} style={{ position: 'absolute' }} />
       <Sidebar>
         <ul>

@@ -13,6 +13,7 @@ export const CartContainer = styled.div`
 
   &.is-open {
     display: flex;
+  }
 `
 export const Sidebar = styled.aside`
   background-color: ${cores.rosa1};

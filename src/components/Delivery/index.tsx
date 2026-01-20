@@ -1,48 +1,45 @@
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
 
 import { AddButtonContainer } from '../AddButton/styles'
 import { Overlay } from '../Modal/styles'
 import { CartContainer, Sidebar } from '../Cart/styles'
-import { RootReducer } from '../../store'
 import { setStep, setDeliveryData } from '../../store/reducers/cart'
 import { FormContainer, FormRow, BtnContainer } from './styles'
 
 const Delivery = () => {
-  const { isOpen } = useSelector((state: RootReducer) => state.cart)
   const dispatch = useDispatch()
 
   const formValid = useFormik({
     initialValues: {
       fullName: '',
-      adress: '',
+      address: '',
       city: '',
       cep: '',
-      phoneNumber: '',
+      number: '',
       comment: ''
     },
     validationSchema: Yup.object({
       fullName: Yup.string()
         .min(5, 'O nome deve ter pelo menos 5 caracteres')
         .required('O campo é obrigatório'),
-      adress: Yup.string().required('O campo é obrigatório'),
-      city: Yup.string().required('O campo é obrigatório'),
+      address: Yup.string().required('O campo é obrigatório'),
       cep: Yup.string()
         .min(9, 'CEP inválido')
         .max(9, 'CEP inválido')
         .required('O campo é obrigatório'),
-      phoneNumber: Yup.string().required('O campo é obrigatório')
+      number: Yup.string().required('O campo é obrigatório')
     }),
     onSubmit: (values) => {
       dispatch(
         setDeliveryData({
           receiver: values.fullName,
           address: {
-            description: values.adress,
+            description: values.address,
             city: values.city,
             zipCode: values.cep,
-            number: Number(values.phoneNumber),
+            number: Number(values.number),
             complement: values.comment
           }
         })
@@ -60,7 +57,7 @@ const Delivery = () => {
   }
 
   return (
-    <CartContainer className={isOpen ? 'is-open' : ''}>
+    <CartContainer className={'is-open'}>
       <Overlay style={{ position: 'absolute' }} />
       <Sidebar>
         <form onSubmit={formValid.handleSubmit}>
@@ -79,16 +76,16 @@ const Delivery = () => {
               <small>{getErrorMessage('fullName')}</small>
             </div>
             <div>
-              <label htmlFor="adress">Endereço</label>
+              <label htmlFor="address">Endereço</label>{' '}
               <input
-                id="adress"
+                id="address"
                 type="text"
-                name="adress"
-                value={formValid.values.adress}
+                name="address"
+                value={formValid.values.address}
                 onChange={formValid.handleChange}
                 onBlur={formValid.handleBlur}
               />
-              <small>{getErrorMessage('adress')}</small>
+              <small>{getErrorMessage('address')}</small>{' '}
             </div>
             <div>
               <label htmlFor="city">Cidade</label>
@@ -116,16 +113,16 @@ const Delivery = () => {
                 <small>{getErrorMessage('cep')}</small>
               </div>
               <div>
-                <label htmlFor="phoneNumber">Número</label>
+                <label htmlFor="number">Número</label>
                 <input
-                  id="phoneNumber"
+                  id="number"
                   type="text"
-                  name="phoneNumber"
-                  value={formValid.values.phoneNumber}
+                  name="number"
+                  value={formValid.values.number}
                   onChange={formValid.handleChange}
                   onBlur={formValid.handleBlur}
                 />
-                <small>{getErrorMessage('phoneNumber')}</small>
+                <small>{getErrorMessage('number')}</small>
               </div>
             </FormRow>
             <div>
@@ -141,7 +138,7 @@ const Delivery = () => {
             </div>
           </FormContainer>
           <BtnContainer>
-            <button type="submit" onClick={() => dispatch(setStep('payment'))}>
+            <button type="submit">
               <AddButtonContainer>Continuar com pagamento</AddButtonContainer>
             </button>
             <button type="button" onClick={() => dispatch(setStep('cart'))}>

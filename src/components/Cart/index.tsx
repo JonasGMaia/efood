@@ -28,30 +28,33 @@ const Cart = () => {
       currency: 'BRL'
     }).format(valor)
   }
-  const { isOpen, items } = useSelector((state: RootReducer) => state.cart)
+  const { items } = useSelector((state: RootReducer) => state.cart)
   const dispatch = useDispatch()
+
   const handleCloseCart = () => {
     dispatch(close())
   }
-  const removeItem = (id: number) => {
-    dispatch(remove(id))
+
+  const removeItem = (cartItemId: string) => {
+    dispatch(remove(cartItemId))
   }
 
   return (
-    <CartContainer className={isOpen ? 'is-open' : ''}>
+    <CartContainer className={'isOpen'}>
       <Overlay onClick={handleCloseCart} style={{ position: 'absolute' }} />
       <Sidebar>
         <ul>
-          {items.map((item, index) => (
-            <CartItem key={index}>
+          {items.map((item) => (
+            <CartItem key={item.cartItemId}>
+              {' '}
               <CartImage>
-                <img src={item.foto} alt="" />
+                <img src={item.foto} alt={item.nome} />
               </CartImage>
               <CartItemDetails>
                 <h3>{item.nome}</h3>
                 <p>{paraReal(item.preco)}</p>
                 <LixeiraIcone
-                  onClick={() => removeItem(index)}
+                  onClick={() => removeItem(item.cartItemId)}
                   src={lixeira}
                   alt="remover item do carrinho"
                 />
@@ -63,11 +66,13 @@ const Cart = () => {
           <p>Valor total:</p>
           <p>{paraReal(valorTotal)}</p>
         </SidebarDetails>
-        <SideBarButton onClick={() => dispatch(setStep('delivery'))}>
-          <AddButtonContainer className="buyButton">
-            Continuar com a entrega
-          </AddButtonContainer>
-        </SideBarButton>
+        {items.length > 0 && (
+          <SideBarButton onClick={() => dispatch(setStep('delivery'))}>
+            <AddButtonContainer className="buyButton">
+              Continuar com a entrega
+            </AddButtonContainer>
+          </SideBarButton>
+        )}
       </Sidebar>
     </CartContainer>
   )

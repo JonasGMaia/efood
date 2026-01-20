@@ -1,4 +1,4 @@
-import { useEffect } from 'react' // Importação necessária para o sucesso
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useFormik } from 'formik'
 import * as Yup from 'yup'
@@ -13,11 +13,11 @@ import { usePurchaseMutation } from '../../services/api'
 
 const Payment = () => {
   const dispatch = useDispatch()
-  const [purchase, { isSuccess, data }] = usePurchaseMutation()
 
-  const { items, delivery, isOpen } = useSelector(
-    (state: RootReducer) => state.cart
-  )
+  const [purchase, { isSuccess, data, isLoading, isError }] =
+    usePurchaseMutation()
+
+  const { items, delivery } = useSelector((state: RootReducer) => state.cart)
   const valorTotal = useSelector(selectTotalNoCarrinho)
 
   const paraReal = (valor = 0) => {
@@ -66,15 +66,24 @@ const Payment = () => {
           id: item.id,
           price: item.preco
         })),
-        delivery: delivery,
+        delivery: {
+          receiver: delivery.receiver,
+          address: {
+            description: delivery.address.description,
+            city: delivery.address.city,
+            zipCode: delivery.address.zipCode,
+            number: delivery.address.number,
+            complement: delivery.address.complement
+          }
+        },
         payment: {
           card: {
             name: values.CardName,
             number: values.CardNumber,
             code: Number(values.cvv),
             expires: {
-              month: Number(values.validadeMes),
-              year: Number(values.validadeAno)
+              month: values.validadeMes,
+              year: values.validadeAno
             }
           }
         }
@@ -91,12 +100,20 @@ const Payment = () => {
   }
 
   return (
-    <CartContainer className={isOpen ? 'is-open' : ''}>
+    <CartContainer className={'is-open'}>
       <Overlay style={{ position: 'absolute' }} />
       <Sidebar>
         <form onSubmit={formValid.handleSubmit}>
           <FormContainer>
             <h2>Pagamento - Valor a pagar {paraReal(valorTotal)}</h2>
+
+            {isError && (
+              <p style={{ color: 'red', marginBottom: '16px' }}>
+                Houve um erro ao processar o pagamento. Por favor, tente
+                novamente.
+              </p>
+            )}
+
             <div>
               <label htmlFor="CardName">Nome no Cartão</label>
               <input
@@ -106,6 +123,7 @@ const Payment = () => {
                 value={formValid.values.CardName}
                 onChange={formValid.handleChange}
                 onBlur={formValid.handleBlur}
+                disabled={isLoading}
               />
               <small>{getErrorMessage('CardName')}</small>
             </div>
@@ -119,6 +137,7 @@ const Payment = () => {
                   value={formValid.values.CardNumber}
                   onChange={formValid.handleChange}
                   onBlur={formValid.handleBlur}
+                  disabled={isLoading}
                 />
                 <small>{getErrorMessage('CardNumber')}</small>
               </div>
@@ -131,6 +150,7 @@ const Payment = () => {
                   value={formValid.values.cvv}
                   onChange={formValid.handleChange}
                   onBlur={formValid.handleBlur}
+                  disabled={isLoading}
                 />
                 <small>{getErrorMessage('cvv')}</small>
               </div>
@@ -145,6 +165,7 @@ const Payment = () => {
                   value={formValid.values.validadeMes}
                   onChange={formValid.handleChange}
                   onBlur={formValid.handleBlur}
+                  disabled={isLoading}
                 />
                 <small>{getErrorMessage('validadeMes')}</small>
               </div>
@@ -157,19 +178,23 @@ const Payment = () => {
                   value={formValid.values.validadeAno}
                   onChange={formValid.handleChange}
                   onBlur={formValid.handleBlur}
+                  disabled={isLoading}
                 />
                 <small>{getErrorMessage('validadeAno')}</small>
               </div>
             </FormRow>
           </FormContainer>
           <BtnContainer>
-            <button
-              type="submit"
-              onClick={() => dispatch(setStep('confirmation'))}
-            >
-              <AddButtonContainer>Finalizar pagamento</AddButtonContainer>
+            <button type="submit" disabled={isLoading}>
+              <AddButtonContainer>
+                {isLoading ? 'Processando...' : 'Finalizar pagamento'}
+              </AddButtonContainer>
             </button>
-            <button type="button" onClick={() => dispatch(setStep('delivery'))}>
+            <button
+              type="button"
+              onClick={() => dispatch(setStep('delivery'))}
+              disabled={isLoading}
+            >
               <AddButtonContainer>
                 Voltar para edição de endereço
               </AddButtonContainer>

@@ -1,14 +1,12 @@
 import { AddButtonContainer } from '../AddButton/styles'
 import { Overlay } from '../Modal/styles'
 import { CartContainer, Sidebar } from '../Cart/styles'
-import { useSelector, useDispatch } from 'react-redux'
-import { RootReducer } from '../../store'
+import { useDispatch } from 'react-redux'
 import { BtnContainer, FormContainer } from '../Delivery/styles'
 import { close, reset } from '../../store/reducers/cart'
 import { usePurchaseMutation } from '../../services/api'
 
 const Confirmation = () => {
-  const { isOpen } = useSelector((state: RootReducer) => state.cart)
   const dispatch = useDispatch()
   const [_, { data }] = usePurchaseMutation({
     fixedCacheKey: 'checkout-mutation'
@@ -19,7 +17,7 @@ const Confirmation = () => {
   }
 
   return (
-    <CartContainer className={isOpen ? 'is-open' : ''}>
+    <CartContainer className={'is-open'}>
       <Overlay style={{ position: 'absolute' }} />
       <Sidebar>
         <FormContainer>

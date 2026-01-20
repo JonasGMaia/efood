@@ -13,8 +13,12 @@ type DeliveryPayload = {
   }
 }
 
+export type CartItemType = CardapioItem & {
+  cartItemId: string
+}
+
 type CartState = {
-  items: CardapioItem[]
+  items: CartItemType[]
   isOpen: boolean
   step: 'cart' | 'delivery' | 'payment' | 'confirmation'
   delivery: DeliveryPayload
@@ -41,10 +45,16 @@ const cartSlice = createSlice({
   initialState,
   reducers: {
     add: (state, action: PayloadAction<CardapioItem>) => {
-      state.items.push(action.payload)
+      const newItem = {
+        ...action.payload,
+        cartItemId: crypto.randomUUID()
+      }
+      state.items.push(newItem)
     },
-    remove: (state, action: PayloadAction<number>) => {
-      state.items.splice(action.payload, 1)
+    remove: (state, action: PayloadAction<string>) => {
+      state.items = state.items.filter(
+        (item) => item.cartItemId !== action.payload
+      )
     },
     open: (state) => {
       state.isOpen = true
@@ -71,6 +81,7 @@ const cartSlice = createSlice({
 export const { add, open, close, remove, setStep, reset, setDeliveryData } =
   cartSlice.actions
 export default cartSlice.reducer
+
 export const selectTotalNoCarrinho = (state: RootReducer) => {
   return state.cart.items.reduce((acumulador, itemAtual) => {
     return (acumulador += itemAtual.preco)

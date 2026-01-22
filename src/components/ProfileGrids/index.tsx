@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import ProfileCards from '../ProfileCards'
-import { ProfileGrids } from './style'
+import { ProfileGrids } from './styles'
 import Modal from '../Modal'
 import { Card } from '../../pages/Home'
 

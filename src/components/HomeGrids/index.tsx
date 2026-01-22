@@ -1,5 +1,5 @@
 import HomeCard from '../HomeCards'
-import { Grid } from './style'
+import { Grid } from './styles'
 import { Card } from '../../pages/Home'
 import Loader from '../Loader'
 import { useGetRestaurantsQuery } from '../../services/api'

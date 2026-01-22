@@ -10,6 +10,7 @@ import { RootReducer } from '../../store'
 import { setStep, selectTotalNoCarrinho } from '../../store/reducers/cart'
 import { FormContainer, FormRow, BtnContainer } from '../Delivery/styles'
 import { usePurchaseMutation } from '../../services/api'
+import Loader from '../Loader'
 
 const Payment = () => {
   const dispatch = useDispatch()
@@ -104,6 +105,7 @@ const Payment = () => {
       <Overlay style={{ position: 'absolute' }} />
       <Sidebar>
         <form onSubmit={formValid.handleSubmit}>
+          {isLoading && <Loader />}
           <FormContainer>
             <h2>Pagamento - Valor a pagar {paraReal(valorTotal)}</h2>
 

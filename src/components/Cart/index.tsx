@@ -9,7 +9,8 @@ import {
   CartImage,
   CartItemDetails,
   SidebarDetails,
-  SideBarButton
+  SideBarButton,
+  EmptyCart
 } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
 import { RootReducer } from '../../store'
@@ -43,35 +44,41 @@ const Cart = () => {
     <CartContainer className={'is-open'}>
       <Overlay onClick={handleCloseCart} style={{ position: 'absolute' }} />
       <Sidebar>
-        <ul>
-          {items.map((item) => (
-            <CartItem key={item.cartItemId}>
-              {' '}
-              <CartImage>
-                <img src={item.foto} alt={item.nome} />
-              </CartImage>
-              <CartItemDetails>
-                <h3>{item.nome}</h3>
-                <p>{paraReal(item.preco)}</p>
-                <LixeiraIcone
-                  onClick={() => removeItem(item.cartItemId)}
-                  src={lixeira}
-                  alt="remover item do carrinho"
-                />
-              </CartItemDetails>
-            </CartItem>
-          ))}
-        </ul>
-        <SidebarDetails>
-          <p>Valor total:</p>
-          <p>{paraReal(valorTotal)}</p>
-        </SidebarDetails>
-        {items.length > 0 && (
-          <SideBarButton onClick={() => dispatch(setStep('delivery'))}>
-            <AddButtonContainer className="buyButton">
-              Continuar com a entrega
-            </AddButtonContainer>
-          </SideBarButton>
+        {items.length > 0 ? (
+          <>
+            <ul>
+              {items.map((item) => (
+                <CartItem key={item.cartItemId}>
+                  <CartImage>
+                    <img src={item.foto} alt={item.nome} />
+                  </CartImage>
+                  <CartItemDetails>
+                    <h3>{item.nome}</h3>
+                    <p>{paraReal(item.preco)}</p>
+                    <LixeiraIcone
+                      onClick={() => removeItem(item.cartItemId)}
+                      src={lixeira}
+                      alt="remover item do carrinho"
+                    />
+                  </CartItemDetails>
+                </CartItem>
+              ))}
+            </ul>
+            <SidebarDetails>
+              <p>Valor total:</p>
+              <p>{paraReal(valorTotal)}</p>
+            </SidebarDetails>
+            <SideBarButton onClick={() => dispatch(setStep('delivery'))}>
+              <AddButtonContainer className="buyButton">
+                Continuar com a entrega
+              </AddButtonContainer>
+            </SideBarButton>
+          </>
+        ) : (
+          <EmptyCart>
+            O carrinho está vazio. Adicione pelo menos um item para realizar um
+            pedido ( •̀ ω •́ )✧
+          </EmptyCart>
         )}
       </Sidebar>
     </CartContainer>

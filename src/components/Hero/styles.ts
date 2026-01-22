@@ -38,4 +38,9 @@ export const Logo = styled.img`
   width: 125px;
   height: 57px;
   margin-top: 20px;
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 50%;
+    height: auto;
+  }
 `

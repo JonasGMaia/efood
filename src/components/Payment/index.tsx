@@ -16,7 +16,9 @@ const Payment = () => {
   const dispatch = useDispatch()
 
   const [purchase, { isSuccess, data, isLoading, isError }] =
-    usePurchaseMutation()
+    usePurchaseMutation({
+      fixedCacheKey: 'checkout-mutation'
+    })
 
   const { items, delivery } = useSelector((state: RootReducer) => state.cart)
   const valorTotal = useSelector(selectTotalNoCarrinho)

@@ -92,3 +92,8 @@ export const SideBarButton = styled.button`
     }
   }
 `
+export const EmptyCart = styled.p`
+  color: ${cores.rosa2};
+  font-weight: 300;
+  padding: 20px;
+`

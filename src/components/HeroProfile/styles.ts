@@ -67,4 +67,9 @@ export const CartButton = styled.button`
   background: none;
   font-size: 14px;
   color: ${cores.rosa1};
+
+  @media (max-width: ${breakpoints.tablet}) {
+    width: 50%;
+    font-size: 70%;
+  }
 `

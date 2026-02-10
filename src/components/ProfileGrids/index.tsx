@@ -2,14 +2,16 @@ import { useState } from 'react'
 import ProfileCards from '../ProfileCards'
 import { ProfileGrids } from './styles'
 import Modal from '../Modal'
-import { Card } from '../../pages/Home'
+import { Card, CardapioItem } from '../../pages/Home'
 
 export type ProfileGridProps = {
   profileCardsfunction: Card
 }
 
 const ProfileGrid = ({ profileCardsfunction }: ProfileGridProps) => {
-  const [isCardSelected, setIsCardSelected] = useState<any | null>(null)
+  const [isCardSelected, setIsCardSelected] = useState<CardapioItem | null>(
+    null
+  )
 
   return (
     <>

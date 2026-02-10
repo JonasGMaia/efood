@@ -8,7 +8,7 @@ import { usePurchaseMutation } from '../../services/api'
 
 const Confirmation = () => {
   const dispatch = useDispatch()
-  const [_, { data }] = usePurchaseMutation({
+  const [, { data }] = usePurchaseMutation({
     fixedCacheKey: 'checkout-mutation'
   })
   const handleCloseCart = () => {

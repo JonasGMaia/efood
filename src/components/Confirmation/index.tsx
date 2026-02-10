@@ -33,11 +33,9 @@ const Confirmation = () => {
           </p>
         </FormContainer>
         <BtnContainer>
-          <button>
-            <AddButtonContainer onClick={handleCloseCart}>
-              Concluir
-            </AddButtonContainer>
-          </button>
+          <AddButtonContainer onClick={handleCloseCart}>
+            Concluir
+          </AddButtonContainer>
         </BtnContainer>
       </Sidebar>
     </CartContainer>

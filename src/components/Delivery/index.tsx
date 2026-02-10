@@ -138,12 +138,16 @@ const Delivery = () => {
             </div>
           </FormContainer>
           <BtnContainer>
-            <button type="submit">
-              <AddButtonContainer>Continuar com pagamento</AddButtonContainer>
-            </button>
-            <button type="button" onClick={() => dispatch(setStep('cart'))}>
-              <AddButtonContainer>Voltar para o carrinho</AddButtonContainer>
-            </button>
+            <AddButtonContainer type="submit">
+              Continuar com pagamento
+            </AddButtonContainer>
+
+            <AddButtonContainer
+              type="button"
+              onClick={() => dispatch(setStep('cart'))}
+            >
+              Voltar para o carrinho
+            </AddButtonContainer>
           </BtnContainer>
         </form>
       </Sidebar>

@@ -9,7 +9,6 @@ import {
   CartImage,
   CartItemDetails,
   SidebarDetails,
-  SideBarButton,
   EmptyCart
 } from './styles'
 import { useDispatch, useSelector } from 'react-redux'
@@ -68,11 +67,13 @@ const Cart = () => {
               <p>Valor total:</p>
               <p>{paraReal(valorTotal)}</p>
             </SidebarDetails>
-            <SideBarButton onClick={() => dispatch(setStep('delivery'))}>
-              <AddButtonContainer className="buyButton">
-                Continuar com a entrega
-              </AddButtonContainer>
-            </SideBarButton>
+
+            <AddButtonContainer
+              className="buyButton"
+              onClick={() => dispatch(setStep('delivery'))}
+            >
+              Continuar com a entrega
+            </AddButtonContainer>
           </>
         ) : (
           <EmptyCart>

@@ -189,20 +189,17 @@ const Payment = () => {
             </FormRow>
           </FormContainer>
           <BtnContainer>
-            <button type="submit" disabled={isLoading}>
-              <AddButtonContainer>
-                {isLoading ? 'Processando...' : 'Finalizar pagamento'}
-              </AddButtonContainer>
-            </button>
-            <button
+            <AddButtonContainer type="submit" disabled={isLoading}>
+              {isLoading ? 'Processando...' : 'Finalizar pagamento'}
+            </AddButtonContainer>
+
+            <AddButtonContainer
               type="button"
               onClick={() => dispatch(setStep('delivery'))}
               disabled={isLoading}
             >
-              <AddButtonContainer>
-                Voltar para edição de endereço
-              </AddButtonContainer>
-            </button>
+              Voltar para edição de endereço
+            </AddButtonContainer>
           </BtnContainer>
         </form>
       </Sidebar>
